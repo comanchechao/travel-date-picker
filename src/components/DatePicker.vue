@@ -207,11 +207,12 @@ function resetSelection() {
 }
 
 // Toggle one-way/round-trip
-function toggleTripType() {
-  isOneWay.value = !isOneWay.value;
-  if (isOneWay.value) {
-    returnDate.value = null;
-  }
+function toggleReturn() {
+  isOneWay.value = false;
+}
+
+function toggleOneWay() {
+  isOneWay.value = true;
 }
 
 // Passenger management
@@ -342,7 +343,7 @@ function confirmSelection() {
       <div class="flex justify-center mb-4">
         <div class="gap-2 rounded-full p-1 flex w-full">
           <button
-            @click="toggleTripType"
+            @click="toggleReturn"
             class="py-1 px-3 rounded-full transition-all duration-300 text-xs font-medium flex-1 flex items-center justify-center"
             :class="
               !isOneWay ? 'bg-[#FFD700] text-white shadow-md' : 'text-gray-500'
@@ -352,7 +353,7 @@ function confirmSelection() {
             <span>رفت و برگشت</span>
           </button>
           <button
-            @click="toggleTripType"
+            @click="toggleOneWay"
             class="py-1 px-3 rounded-full transition-all duration-300 text-xs font-medium flex-1 flex items-center justify-center"
             :class="
               isOneWay ? 'bg-[#FFD700] text-white shadow-md' : 'text-gray-500'
