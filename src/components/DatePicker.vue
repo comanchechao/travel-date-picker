@@ -439,14 +439,13 @@ function confirmSelection() {
                   <span
                     class="text-sm transition-all duration-200 w-full h-full flex items-center justify-center text-gray-300"
                     :class="{
-                      'text-black bg-[#FFD700]':
+                      'text-gray-900 bg-[#FFD700]':
                         day.isDepartureDate || day.isReturnDate,
-                      'bg-[#333333]':
+                      'bg-[#333333] text-gray-900':
                         day.isToday &&
                         !day.isDepartureDate &&
                         !day.isReturnDate,
-                      'bg-[#FFD700] bg-opacity-20 text-[#FFD700]':
-                        day.isInRange,
+                      'bg-[#FFD700] bg-opacity-20 text-gray-900': day.isInRange,
                     }"
                   >
                     {{ day.day ? toPersianDigits(day.day) : "" }}
