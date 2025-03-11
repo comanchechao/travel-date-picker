@@ -301,29 +301,19 @@ function confirmSelection() {
 }
 
 // Search function
-function search() {
-  // Here you would implement the search functionality
-  console.log("Searching with dates:", {
-    departure: departureDate.value,
-    return: isOneWay.value ? null : returnDate.value,
-    passengers: passengerCount.value,
-    isOneWay: isOneWay.value,
-  });
-  // You could emit an event with the search parameters
-}
 </script>
 
 <template>
   <div class="date-picker">
-    <div class="bg-[#1a7cff] p-5 rounded-lg shadow-md">
-      <h2 class="text-xl font-bold text-white mb-5 text-center">
+    <div class="bg-[#1E1E1E] p-5 rounded-lg shadow-md border border-[#333333]">
+      <h2 class="text-xl font-bold text-[#FFD700] mb-5 text-center">
         انتخاب تاریخ سفر
       </h2>
 
       <div class="grid grid-cols-2 gap-3 mb-4">
         <!-- Departure Date Selector -->
         <div
-          class="relative"
+          class="relative tooltip-container"
           @click="
             () => {
               isCalendarOpen = true;
@@ -332,18 +322,18 @@ function search() {
           "
         >
           <div
-            class="w-full bg-white rounded-lg p-3 text-center transition duration-300 hover:shadow-md focus:outline-none cursor-pointer"
+            class="w-full bg-[#2A2A2A] rounded-lg p-3 text-center transition duration-300 hover:shadow-md focus:outline-none cursor-pointer border border-[#333333]"
             :class="{
-              'ring-2 ring-[#1a7cff] shadow-md':
+              'ring-2 ring-[#FFD700] shadow-md':
                 currentView === 'departure' && isCalendarOpen,
-              'border-2 border-[#1a7cff]': departureDate !== null,
+              'border-2 border-[#FFD700]': departureDate !== null,
             }"
           >
             <div class="flex flex-col items-center">
-              <span class="text-xs text-gray-500 mb-1">تاریخ رفت</span>
+              <span class="text-xs text-gray-400 mb-1">تاریخ رفت</span>
               <div class="flex items-center">
-                <span class="text-[#1a7cff] ml-1">📅</span>
-                <span class="font-bold text-gray-800 text-sm">{{
+                <span class="text-[#FFD700] ml-1">📅</span>
+                <span class="font-bold text-gray-200 text-sm">{{
                   departureDate
                     ? formatCompactDate(departureDate)
                     : "انتخاب کنید"
@@ -351,11 +341,12 @@ function search() {
               </div>
             </div>
           </div>
+          <div class="selector-tooltip">برای انتخاب تاریخ رفت کلیک کنید</div>
         </div>
 
         <!-- Return Date Selector -->
         <div
-          class="relative"
+          class="relative tooltip-container"
           @click="
             () => {
               if (!isOneWay) {
@@ -366,19 +357,19 @@ function search() {
           "
         >
           <div
-            class="w-full bg-white rounded-lg p-3 text-center transition duration-300 hover:shadow-md focus:outline-none cursor-pointer"
+            class="w-full bg-[#2A2A2A] rounded-lg p-3 text-center transition duration-300 hover:shadow-md focus:outline-none cursor-pointer border border-[#333333]"
             :class="{
-              'ring-2 ring-[#1a7cff] shadow-md':
+              'ring-2 ring-[#FFD700] shadow-md':
                 currentView === 'return' && isCalendarOpen,
               'opacity-50': isOneWay,
-              'border-2 border-[#1a7cff]': returnDate !== null && !isOneWay,
+              'border-2 border-[#FFD700]': returnDate !== null && !isOneWay,
             }"
           >
             <div class="flex flex-col items-center">
-              <span class="text-xs text-gray-500 mb-1">تاریخ برگشت</span>
+              <span class="text-xs text-gray-400 mb-1">تاریخ برگشت</span>
               <div class="flex items-center">
-                <span class="text-[#1a7cff] ml-1">📅</span>
-                <span class="font-bold text-gray-800 text-sm">{{
+                <span class="text-[#FFD700] ml-1">📅</span>
+                <span class="font-bold text-gray-200 text-sm">{{
                   isOneWay
                     ? "بدون برگشت"
                     : returnDate
@@ -388,19 +379,14 @@ function search() {
               </div>
             </div>
           </div>
+          <div class="selector-tooltip" v-if="!isOneWay">
+            برای انتخاب تاریخ برگشت کلیک کنید
+          </div>
+          <div class="selector-tooltip" v-else>
+            برای سفر یک طرفه غیرفعال شده است
+          </div>
         </div>
       </div>
-
-      <!-- Search Button -->
-      <button
-        @click="search"
-        class="w-full py-2 px-6 bg-black text-white font-bold rounded-lg transition duration-300 transform hover:scale-[1.02] active:scale-[0.98] mb-4 shadow-md"
-      >
-        <div class="flex items-center justify-center">
-          <span class="ml-2">🔍</span>
-          <span>جستجو</span>
-        </div>
-      </button>
 
       <!-- Trip Type Toggle -->
       <div class="flex justify-center mb-4">
@@ -409,7 +395,7 @@ function search() {
             @click="toggleTripType"
             class="py-1 px-3 rounded-full transition-all duration-300 text-xs font-medium flex-1 flex items-center justify-center"
             :class="
-              !isOneWay ? 'bg-white text-gray-700 shadow-md' : 'text-white'
+              !isOneWay ? 'bg-[#FFD700] text-white shadow-md' : 'text-gray-500'
             "
           >
             <span class="ml-1">🔄</span>
@@ -419,7 +405,7 @@ function search() {
             @click="toggleTripType"
             class="py-1 px-3 rounded-full transition-all duration-300 text-xs font-medium flex-1 flex items-center justify-center"
             :class="
-              isOneWay ? 'bg-white text-gray-700 shadow-md' : 'text-white'
+              isOneWay ? 'bg-[#FFD700] text-white shadow-md' : 'text-gray-500'
             "
           >
             <span class="ml-1">➡️</span>
@@ -442,17 +428,17 @@ function search() {
         <div class="calendar-overlay">
           <div
             ref="calendarRef"
-            class="calendar-container bg-white rounded-lg overflow-hidden shadow-2xl"
+            class="calendar-container bg-[#1E1E1E] rounded-lg overflow-hidden shadow-2xl border border-[#333333]"
           >
             <!-- Calendar Header -->
             <div
-              class="py-2 px-3 bg-[#1a7cff] text-white flex justify-between items-center"
+              class="py-2 px-3 bg-[#2A2A2A] text-[#FFD700] flex justify-between items-center border-b border-[#333333]"
             >
               <button
                 @click="nextMonth"
-                class="p-1 rounded-full hover:bg-white hover:bg-opacity-20 transition duration-200 w-8 h-8 flex items-center justify-center"
+                class="p-1 rounded-full hover:bg-[#333333] transition duration-200 w-8 h-8 flex items-center justify-center"
               >
-                <span class="text-xl font-bold">◀</span>
+                <span class="text-xl font-bold">▶</span>
               </button>
 
               <div class="text-base font-bold text-center">
@@ -462,9 +448,9 @@ function search() {
 
               <button
                 @click="previousMonth"
-                class="p-1 rounded-full hover:bg-white hover:bg-opacity-20 transition duration-200 w-8 h-8 flex items-center justify-center"
+                class="p-1 rounded-full hover:bg-[#333333] transition duration-200 w-8 h-8 flex items-center justify-center"
               >
-                <span class="text-xl font-bold">▶</span>
+                <span class="text-xl font-bold">◀</span>
               </button>
             </div>
 
@@ -473,7 +459,7 @@ function search() {
               <div
                 v-for="(day, index) in persianWeekdays"
                 :key="index"
-                class="py-2 text-center text-gray-700 font-medium text-xs border-b"
+                class="py-2 text-center text-gray-400 font-medium text-xs border-b border-[#333333]"
               >
                 {{ day }}
               </div>
@@ -497,18 +483,19 @@ function search() {
                 "
               >
                 <div
-                  class="relative z-10 w-full h-full flex items-center justify-center"
+                  class="relative z-10 w-full h-full flex items-center justify-center tooltip-container"
                 >
                   <span
-                    class="text-sm transition-all duration-200 w-full h-full flex items-center justify-center"
+                    class="text-sm transition-all duration-200 w-full h-full flex items-center justify-center text-gray-300"
                     :class="{
-                      'text-white bg-[#1a7cff]':
+                      'text-black bg-[#FFD700]':
                         day.isDepartureDate || day.isReturnDate,
-                      'bg-gray-200':
+                      'bg-[#333333]':
                         day.isToday &&
                         !day.isDepartureDate &&
                         !day.isReturnDate,
-                      'bg-[#1a7cff] text-white': day.isInRange,
+                      'bg-[#FFD700] bg-opacity-20 text-[#FFD700]':
+                        day.isInRange,
                     }"
                   >
                     {{ day.day ? toPersianDigits(day.day) : "" }}
@@ -517,11 +504,14 @@ function search() {
                   <!-- Tooltips -->
                   <div
                     v-if="day.isDepartureDate"
-                    class="tooltip departure-tooltip"
+                    class="calendar-tooltip departure-tooltip"
                   >
                     تاریخ رفت
                   </div>
-                  <div v-if="day.isReturnDate" class="tooltip return-tooltip">
+                  <div
+                    v-if="day.isReturnDate"
+                    class="calendar-tooltip return-tooltip"
+                  >
                     تاریخ برگشت
                   </div>
                 </div>
@@ -529,17 +519,19 @@ function search() {
             </div>
 
             <!-- Actions -->
-            <div class="p-3 bg-white border-t flex justify-between">
+            <div
+              class="p-3 bg-[#2A2A2A] border-t border-[#333333] flex justify-between"
+            >
               <button
                 @click="resetSelection"
-                class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition duration-200 flex items-center bg-gray-100 rounded-md"
+                class="px-4 py-2 text-sm text-gray-300 hover:text-white transition duration-200 flex items-center bg-[#333333] rounded-md"
               >
                 <span>پاک کردن</span>
               </button>
 
               <button
                 @click="confirmSelection"
-                class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition duration-200 text-sm flex items-center"
+                class="px-4 py-2 bg-[#FFD700] text-white rounded-md hover:bg-[#E6C200] transition duration-200 text-sm flex items-center"
               >
                 <span>تایید</span>
               </button>
@@ -549,17 +541,19 @@ function search() {
       </TransitionRoot>
 
       <!-- Passenger Count -->
-      <div class="bg-white rounded-lg p-3 shadow-md">
-        <div class="text-xs text-gray-500 mb-1">تعداد مسافران</div>
+      <div
+        class="bg-[#2A2A2A] rounded-lg p-3 shadow-md border border-[#333333]"
+      >
+        <div class="text-xs text-gray-400 mb-1">تعداد مسافران</div>
         <div class="flex justify-between items-center">
-          <div class="font-bold text-gray-800 text-sm flex items-center">
+          <div class="font-bold text-gray-200 text-sm flex items-center">
             <span class="ml-1">👤</span>
             <span>{{ toPersianDigits(passengerCount) }} مسافر</span>
           </div>
           <div class="flex items-center gap-2">
             <button
               @click="decreasePassengers"
-              class="w-7 h-7 rounded-md bg-black flex items-center justify-center hover:bg-gray-800 transition duration-200 active:scale-95"
+              class="w-7 h-7 rounded-md bg-[#333333] flex items-center justify-center hover:bg-[#444444] transition duration-200 active:scale-95"
               :disabled="passengerCount <= 1"
               :class="{ 'opacity-50 cursor-not-allowed': passengerCount <= 1 }"
             >
@@ -567,7 +561,7 @@ function search() {
             </button>
             <button
               @click="increasePassengers"
-              class="w-7 h-7 rounded-md bg-black flex items-center justify-center hover:bg-gray-800 transition duration-200 active:scale-95"
+              class="w-7 h-7 rounded-md bg-[#333333] flex items-center justify-center hover:bg-[#444444] transition duration-200 active:scale-95"
               :disabled="passengerCount >= 9"
               :class="{ 'opacity-50 cursor-not-allowed': passengerCount >= 9 }"
             >
@@ -594,9 +588,10 @@ function search() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 50;
   padding: 1rem;
+  backdrop-filter: blur(3px);
 }
 
 .calendar-container {
@@ -625,7 +620,7 @@ button {
 /* Improve day selection styling */
 .aspect-square {
   position: relative;
-  padding: 0.25rem;
+  padding: 0;
 }
 
 .aspect-square::before {
@@ -670,24 +665,95 @@ button {
 }
 
 /* Tooltip styling */
-.tooltip {
+.calendar-tooltip {
   position: absolute;
-  top: 100%;
+  top: 105%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 2px 8px;
+  background-color: rgba(255, 215, 0, 0.9);
+  color: black;
+  padding: 4px 10px;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  white-space: nowrap;
+  z-index: 30;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  pointer-events: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgba(255, 215, 0, 0.9) transparent;
+}
+
+.tooltip-container:hover .calendar-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.departure-tooltip {
+  background-color: rgba(255, 215, 0, 0.9);
+}
+
+.departure-tooltip::before {
+  border-color: transparent transparent rgba(255, 215, 0, 0.9) transparent;
+}
+
+.return-tooltip {
+  background-color: rgba(255, 215, 0, 0.9);
+}
+
+.return-tooltip::before {
+  border-color: transparent transparent rgba(255, 215, 0, 0.9) transparent;
+}
+
+/* Tooltip for date selectors */
+.tooltip-container {
+  position: relative;
+}
+
+.selector-tooltip {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 215, 0, 0.9);
+  color: black;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
   white-space: nowrap;
   z-index: 20;
   opacity: 0;
-  transition: opacity 0.3s;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
   pointer-events: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.aspect-square:hover .tooltip {
+.selector-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgba(255, 215, 0, 0.9) transparent;
+}
+
+.tooltip-container:hover .selector-tooltip {
   opacity: 1;
+  visibility: visible;
 }
 </style>
