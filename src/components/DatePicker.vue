@@ -129,25 +129,6 @@ function isDisabled(date: Date): boolean {
   return date < today;
 }
 
-// Helper functions for range styling
-function isFirstDayOfRange(date: Date): boolean {
-  if (!departureDate.value || !returnDate.value) return false;
-  const d1 = new Date(date);
-  const d2 = new Date(departureDate.value);
-  d1.setHours(0, 0, 0, 0);
-  d2.setHours(0, 0, 0, 0);
-  return d1.getTime() === d2.getTime();
-}
-
-function isLastDayOfRange(date: Date): boolean {
-  if (!departureDate.value || !returnDate.value) return false;
-  const d1 = new Date(date);
-  const d2 = new Date(returnDate.value);
-  d1.setHours(0, 0, 0, 0);
-  d2.setHours(0, 0, 0, 0);
-  return d1.getTime() === d2.getTime();
-}
-
 // Navigation functions
 function previousMonth() {
   const { jy, jm } = currentJalaaliDate.value;
@@ -206,18 +187,6 @@ function selectDate(date: Date) {
   }
 }
 
-// Format date for display
-function formatPersianDate(date: Date | null): string {
-  if (!date) return "انتخاب کنید";
-
-  const jDate = jalaali.toJalaali(date);
-  const year = jDate.jy;
-  const month = persianMonths[jDate.jm - 1]; // jalaali-js months are 1-based
-  const day = jDate.jd;
-
-  return `${toPersianDigits(day)} ${month} ${toPersianDigits(year)}`;
-}
-
 // Format date for compact display (used in the UI)
 function formatCompactDate(date: Date | null): string {
   if (!date) return "انتخاب کنید";
@@ -230,26 +199,11 @@ function formatCompactDate(date: Date | null): string {
   return `${toPersianDigits(day)} ${month} ${toPersianDigits(year)}`;
 }
 
-// Get current month name
-const currentMonthName = computed(() => {
-  return persianMonths[currentJalaaliDate.value.jm - 1]; // jalaali-js months are 1-based
-});
-
-// Get current year
-const currentYear = computed(() => {
-  return currentJalaaliDate.value.jy;
-});
-
 // Reset selection
 function resetSelection() {
   departureDate.value = null;
   returnDate.value = null;
   currentView.value = "departure";
-}
-
-// Toggle calendar
-function toggleCalendar() {
-  isCalendarOpen.value = !isCalendarOpen.value;
 }
 
 // Toggle one-way/round-trip
@@ -289,15 +243,11 @@ onMounted(() => {
 });
 
 // Watch for changes in selected dates
-watch([departureDate, returnDate], () => {
-  // You can add additional logic here if needed
-});
+watch([departureDate, returnDate], () => {});
 
 // Confirm selection
 function confirmSelection() {
   isCalendarOpen.value = false;
-  // Here you can add logic to handle the confirmed dates
-  // For example, emit an event with the selected dates
 }
 
 // Search function
