@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   modules: [],
+
   app: {
     head: {
       htmlAttrs: {
@@ -19,10 +20,13 @@ export default defineNuxtConfig({
       ]
     }
   },
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
-  }
-}) 
+  },
+
+  compatibilityDate: '2025-03-12'
+})
