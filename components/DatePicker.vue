@@ -346,7 +346,7 @@ function confirmSelection() {
             @click="toggleReturn"
             class="py-1 px-3 rounded-full transition-all duration-300 text-xs font-medium flex-1 flex items-center justify-center"
             :class="
-              !isOneWay ? 'bg-[#FFD700] text-white shadow-md' : 'text-gray-500'
+              !isOneWay ? 'bg-[#FFD700] text-black shadow-md' : 'text-gray-500'
             "
           >
             <span class="ml-1">🔄</span>
@@ -356,7 +356,7 @@ function confirmSelection() {
             @click="toggleOneWay"
             class="py-1 px-3 rounded-full transition-all duration-300 text-xs font-medium flex-1 flex items-center justify-center"
             :class="
-              isOneWay ? 'bg-[#FFD700] text-white shadow-md' : 'text-gray-500'
+              isOneWay ? 'bg-[#FFD700] text-black shadow-md' : 'text-gray-500'
             "
           >
             <span class="ml-1">➡️</span>
