@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import DatePicker from "./components/DatePicker.vue";
-</script>
-
 <template>
   <div class="app-container">
     <div class="date-picker-wrapper">
@@ -9,6 +5,10 @@ import DatePicker from "./components/DatePicker.vue";
     </div>
   </div>
 </template>
+
+<script setup>
+import DatePicker from '~/components/DatePicker.vue';
+</script>
 
 <style>
 html,
@@ -71,4 +71,4 @@ body {
   transform: translateX(-20px);
   opacity: 0;
 }
-</style>
+</style> 
